@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <div @click="goClick">{{ message }}</div> -->
+        <div @click.ctrl="goClick(1,$event)">{{ message }}</div>
+    </div>
+</body>
+<script>
+    /* 
+    事件修饰符
+        .stop
+        .prevent
+        .capture
+        .self
+        .once
+        .passive
+    按键修饰符
+        .enter
+        .tab
+        .delete (捕获“删除”和“退格”键)
+        .esc
+        .space
+        .up
+        .down
+        .left
+        .right
+    系统修饰键 （可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。） 不精确 比如 dom 中的按下ctrl和alt见也会触发事件
+        .ctrl
+        .alt
+        .shift
+        .meta
+
+   exact 修饰符 .exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。
+     */
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1'
+        },
+        methods:{
+            goClick(a,e){
+                console.log('e',e);
+                
+            }
+        }
+    })
+</script>
+
+</html>

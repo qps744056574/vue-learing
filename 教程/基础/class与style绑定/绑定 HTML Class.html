@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    .color {
+        color: red;
+    }
+
+    .bg {
+        background: black;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div :class="[a,{bg:b}]">
+            {{message}}
+            <!-- 组件上的样式会加到根元素上 -->
+            <my class="root"></my>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    /* 
+        对象语法
+
+
+        数组语法
+        
+
+    
+     */
+
+    Vue.component('my', {
+        template: "<a class='color bg'>我是a标签</a>"
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1',
+            a: 'color',
+            b: false
+        }
+
+    })
+
+
+
+</script>
+
+</html>

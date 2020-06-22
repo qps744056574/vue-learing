@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--v-model 其实 就是一个语法糖 -->
+        {{ message }}
+        {{aas}}
+        <!-- <input type="text" v-model="message"> -->
+
+        <!-- 等价于 -->
+        <!-- <input type="text" :value="message" @input="message=$event.target.value"> -->
+
+        <!-- <base-input v-model="aas" ></base-input> -->
+        <!-- 等价于 -->
+        <!-- <base-input :aa="aas" @input="goinput" ></base-input> -->
+        <base-input :aa="aas" @input="aas=$event" ></base-input>
+        <base-checkbox v-model="message" ></base-checkbox>
+    </div>
+</body>
+<script>
+    /* 
+        一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是有的时候我们想要prop 的名不是value，发射的事件不是input怎么办？
+        用model 来解决这个问题 prop 是 属性名，event 是要发射的事件的名称 （注意是要发射的事件的名称 @事件名可以不一致）
+        这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当 <base-checkbox> 触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的属性将会被更新。
+    */
+    Vue.component('base-checkbox', {
+        model: {
+            prop: 'checked',
+            event: 'click'
+        },
+        props: {
+            checked: Boolean
+        },
+        template: `
+            <input
+            type="checkbox"
+            v-bind:checked="checked"
+            v-on:change="$emit('click', $event.target.checked)">
+        `
+    })
+    Vue.component('base-input', {
+        model: {
+            prop: 'aa',
+            event: 'input'
+        },
+        props: {
+            aa: String
+        },
+        template: `
+            <input
+            type="type"
+            :value="aa"
+            v-on:input="$emit('input', $event.target.value)">
+        `
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: true,
+            aas:'asdfas'
+        },
+        methods:{
+            onFocus(){
+                
+            },
+            goinput(data){
+                this.aas=data;
+                
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{message}}
+    <aa :value="message" @input="message=$event"></aa>
+  </div>
+</body>
+
+<script>
+  /* 
+  在渲染函数中使用 v-modle
+  
+   */
+
+  Vue.component('aa', {
+    props: ['value'],
+    render: function (createElement) {
+      var self = this
+      return createElement('input', {
+        domProps: {
+          value: self.value
+        },
+        on: {
+          input: function (event) {
+            self.$emit('input', event.target.value)
+          }
+        }
+      })
+    }
+  })
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: 'hello world1'
+    }
+  })
+</script>
+
+</html>

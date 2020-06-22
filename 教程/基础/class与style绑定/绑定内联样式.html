@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">{{a}}</div> -->
+        <div v-bind:style="[baseStyles, overridingStyles]">{{a}}</div>
+    </div>
+</body>
+<script>
+    /* 
+        当 v-bind:style 使用需要添加浏 览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。
+        对象语法
+
+        数组语法
+
+        
+     */
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            a: "sfaklj",
+            activeColor: 'red',
+            fontSize: 30,
+            baseStyles:{
+                fontSize: '30px',
+            },
+            overridingStyles:{
+                color: 'red',
+            }
+        }
+    })
+</script>
+
+</html>

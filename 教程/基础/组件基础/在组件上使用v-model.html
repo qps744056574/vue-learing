@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="message">
+        <!-- 等价于 -->
+        <input type="text" :value="message" @input="message=$event.target.value">
+
+
+        <custom-input v-model="message"></custom-input>
+        <!-- 等价于 -->
+        <!-- 下面的 $event 是事件对象，vue事件对象只能是$event，如果写其他会报错，事件对象在vue中取的是发射的一个数据 -->
+        <custom-input v-bind:value="message"   v-on:input="message = $event"   ></custom-input>
+        <!-- 下面goinput 要不不写（），要不就只能写（$event） -->
+        <custom-input v-bind:value="message"   v-on:input="goinput"   ></custom-input>
+        {{message}}
+    </div>  
+      
+</body>
+<script>
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', 1,$event.target.value)"
+    >
+  `
+})
+var vm=new Vue({
+    el:"#app",
+    data:{
+        message:'hello world1'
+    },
+    methods:{
+        goinput(a){
+            console.log('a',a);
+            
+        }
+    }
+})
+</script>
+</html>

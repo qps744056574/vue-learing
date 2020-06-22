@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+      <div v-html="message"></div>
+      <button>没有用vue的button</button>
+      <button v-bind:disabled="isButtonDisabled">Button</button>
+      </div>  
+
+     
+</body>
+<script>
+var vm=new Vue({
+    el:"#app",
+    data:{
+        message:'<a >我是a标签</a>',
+        // 对于布尔特性 (它们只要存在就意味着值为 true)，v-bind 工作起来跟 原生 略有不同，在这个例子中  
+        // 如果 isButtonDisabled 的值是 null、undefined 或 false，则 disabled 特性甚至不会被包含在渲染出来的 <button> 元素中。
+        isButtonDisabled:undefined
+    }
+
+})
+
+
+
+
+</script>
+</html>

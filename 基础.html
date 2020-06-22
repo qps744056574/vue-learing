@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+            <li>
+                <child-com>
+                     <third-com></third-com>
+                </child-com>
+                <p></p >
+            </li>
+        </div>
+        <script>
+             Vue.component('third-com',{
+                template:'<h2></h2>'
+            })
+            Vue.component('child-com',{
+                template:`<h1>
+
+                         </h1>`
+            })
+            var vm = new Vue({
+                el:"#app"
+            })
+        </script>
+
+</html>

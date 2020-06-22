@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+</body>
+<script>
+    /* 
+        渲染普通的 HTML 元素在 Vue 中是非常快速的，但有的时候你可能有一个组件，这个组件包含了大量静态内容。在这种情况下，你可以在根元素上添加 v-once 特性以确保这些内容只计算一次然后缓存起来，就像这样：
+     */
+    Vue.component('terms-of-service', {
+        template: `
+                    <div v-once>
+                    <h1>Terms of Service</h1>
+                    ... a lot of static content ...
+                    </div>
+                `
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1'
+        }
+    })
+</script>
+
+</html>

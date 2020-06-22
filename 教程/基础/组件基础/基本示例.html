@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+</body>
+<script>
+    // 定义一个名为 button-counter 的新组件
+
+    /* 
+        因为组件是可复用的 Vue 实例，所以它们与 new Vue 接收相同的选项，例如 data、computed、watch、methods 以及生命周期钩子等。仅有的例外是像 el 这样根实例特有的选项
+        data 必须是一个函数(根组件是个对象，因为跟组件不会复用)
+            取而代之的是，一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝：如果不这样可以看官网 (data 在这个组件里面就是一个全局的数据，一个组件的变了，其他的也会变，但是如果用函数的话，都有了各自的空间)
+    
+     */
+    Vue.component('button-counter', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1'
+        }
+    })
+</script>
+
+</html>

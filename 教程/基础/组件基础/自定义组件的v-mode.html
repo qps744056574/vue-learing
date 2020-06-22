@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <custom-input v-model="message"></custom-input>
+    </div>  
+      
+</body>
+<script>
+    /* 
+        先看在组件使用v-model，发现不太完美，因为v-model默认是用的是value和input事件，但是在有些地方value有特殊的有用处，我们也不想用input事件怎么办
+        可以用
+        model: {
+            prop: 'checked',
+            event: 'change'
+        },
+    
+     */
+Vue.component('custom-input', {
+    model:{
+        prop:'aa',
+        event:'change'
+    },
+  props: ['aa'],
+  template: `
+    <input
+      v-bind:value="aa"
+      v-on:input="$emit('change', $event.target.value)"
+    >
+  `
+})
+var vm=new Vue({
+    el:"#app",
+    data:{
+        message:'hello world1'
+    },
+    methods:{
+        
+    }
+})
+</script>
+</html>

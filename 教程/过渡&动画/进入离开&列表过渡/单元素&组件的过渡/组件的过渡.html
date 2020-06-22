@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+/* .fade-enter-active, .fade-leave-active {
+    background:red;
+
+  transition: all 0.5s 0.2s;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateX(50px);
+} */
+
+
+.fade-enter{
+    transform: translateX(50px);
+    background:red;
+}
+.fade-enter-active{
+    transition:all 1s 1s;
+}
+.fade-enter-to{   
+    background: green;
+} 
+ 
+.fade-leave{
+    background:red;
+    transform: translateX(50px);
+}
+.fade-leave-active{
+    color:red;
+    transition:all 1s 1s;
+}
+/* .fade-leave-to{
+    background:green; 
+}   */
+</style>
+<body>
+    <div id="demo">
+        <button v-on:click="show = !show">
+            Toggle
+        </button>
+        <transition name="fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+</body>
+<script>
+    /* 
+            fade-leave 是没有效果的，不知道为啥 （如果没有写leave 和 active和to 是有效果的，所以说v-leave是v-enter 不一样的） 
+            
+            在dom视察中可以看出来 fade-leave 和 fade-enter 闪的很快 ，active 和 to 是共存的，先active 后to，所以可能存在样式覆盖的问题
+
+            .list-enter, .list-leave-to 设置的时候一般这两个是成对出现的
+    
+     */
+    new Vue({
+        el: '#demo',
+        data: {
+            show: true
+        }
+    })
+</script>
+
+</html>

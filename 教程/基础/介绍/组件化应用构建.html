@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+        <ul>
+            <to-do-list v-for="item in groceryList" :todo="item.text" :key="item.id"></to-do-list>
+        </ul>
+        <alert-box>
+            Something bad happened.
+        </alert-box>
+    </div>
+
+</body>
+<script>
+    //  这个得放到实例化之前
+    Vue.component('to-do-list', {
+        props: ['todo'],
+        template: '<li>这是个待办项</li>'
+    })
+    Vue.component('alert-box', {
+        template: `
+        <div class="demo-alert-box">
+        <strong>Error!</strong>
+        <slot></slot>
+        </div>
+  `
+    })
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world',
+            groceryList: [
+                { id: 0, text: '蔬菜' },
+                { id: 1, text: '奶酪' },
+                { id: 2, text: '随便其它什么人吃的东西' }
+            ]
+        }
+    })
+
+
+
+</script>
+
+</html>

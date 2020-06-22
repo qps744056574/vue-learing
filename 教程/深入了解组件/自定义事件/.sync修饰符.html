@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{label}}
+        <!-- <my-sync :aa.sync="label"></my-sync> -->
+        <!-- 其实就是个语法糖 等价于  -->
+
+        <!-- 其实是跟下面的是一样的额，默认的是给了一个$event -->
+        <my-sync :aa="label" @update:aa="goUpdate"></my-sync>
+
+        <my-sync :aa="label" @update:aa="goUpdate($event)"></my-sync>
+
+        <!-- 默认给了 $event 其他的不行-->
+        <my-sync :aa="label" @update:aa="label=$event"></my-sync>
+
+
+        <!-- v-moel 的使用 -->
+        <my-model v-model="label"></my-model>
+
+    </div>
+</body>
+<script>
+    /* 
+        其实v-model和sync 没有啥区别，都是语法糖
+            synv 跟简单，更方便，事件 就是 updata：属性名 可以是任何数据  
+            v-model 的事件呢就是那么几种 click input 等
+
+    
+     */
+    Vue.component('my-sync', {
+        props: ['aa'],
+        data: function () {
+            return {
+                aa1: this.aa
+            }
+        },
+        methods: {
+            goclick() {
+                this.$emit('update:aa', '我是子组件传递过来的额')
+            }
+        },
+        template: `
+        <div @click="goclick">点我</div>
+        `
+    })
+    Vue.component('my-model', {
+        model:{
+            prop:'aa',
+            event:'click'
+        },
+        props: ['aa'],
+        data: function () {
+            return {
+                aa1: this.aa
+            }
+        },
+        methods: {
+            goclick() {
+                this.$emit('click', '我是子组件传递过来的额')
+            }
+        },
+        template: `
+        <div @click="goclick">我是v-model</div>
+        `
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            label: '我是父组件的人'
+        },
+        methods: {
+            onFocus() {
+                console.log('1');
+            },
+            goUpdate(a) {
+                this.label = a;
+                console.log('a', a);
+
+            }
+        }
+    })
+</script>
+
+</html>

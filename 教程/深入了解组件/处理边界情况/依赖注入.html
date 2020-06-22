@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-component ref="usernameInput"></my-component>
+    </div>
+</body>
+<script>
+
+    /* 
+        provide 选项允许我们指定我们想要提供给后代组件的数据/方法。
+     */
+    Vue.component('my-component', {
+        inject: ['getName','message'],
+        template: "<div>我是子组件</div>",
+        mounted() {
+            this.getName()
+            console.log('this.message',this.message);
+             
+        }
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1'
+        },
+        provide: function () {
+            return {
+                getName: this.getName,
+                message:this.message
+            }               
+        },
+        methods:{
+            getName(){
+                console.log('我是秦鹏森');
+                
+            }
+        },
+        mounted() {
+            // console.log('this.$refs', this.$refs.usernameInput);
+        }
+    })
+</script>
+
+</html>

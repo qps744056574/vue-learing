@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- <aa :level="1">我是a</aa> -->
+    <aa #default="obj1">{{obj1.text}}</aa>
+  </div>
+</body>
+
+<script>
+
+  Vue.component("aa", {
+    name: "child",
+    data: function () {
+      return {name:'qps'}
+    },
+    props: ['level'],
+    // 插槽
+    // render: function (cr) {
+    //   return cr('h' + this.level, this.$slots.default)
+    // },
+    // 作用域插槽  // `<div><slot :text="message"></slot></div>`
+    props: ['message'],
+    render: function (createElement) {
+      /*
+       可以看到插槽在哪 这个属性在哪有值 父组件现在就是空的 在render 函数里面可以发挥大作用，这里可以直接写slot 但是在render 不能写 所以在render函数中通过这种方式来写slot
+       相当于是  <slot :text="name"></slot>
+        */
+      console.log(' this.$scopedSlots', this.$scopedSlots);
+      
+      `<div><slot :text="message"></slot></div>`
+      /* 
+        插槽呢 也相当于是一个子元素，所以放到数组里面 
+
+        下面 相当与 <div :obj="{text:this.name}"></div>  因为在轩然函数总不能这么写 所以用 this.$scopedSlots.default 这总方式来写
+       */
+       
+      return createElement('div', [
+        this.$scopedSlots.default({
+          text: this.name
+        })
+      ])
+    }
+  })
+
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: 'hello world1'
+    }
+  })
+</script>
+
+</html>

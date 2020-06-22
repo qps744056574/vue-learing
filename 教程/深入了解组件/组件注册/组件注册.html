@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-component></my-component>
+    </div>
+</body>
+<script>
+    /* 
+        当使用 PascalCase (首字母大写命名) 定义一个组件时，你在引用这个自定义元素时两种命名法都可以使用。也就是说 <my-component-name> 和 <MyComponentName> 都是可接受的。注意，尽管如此，直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的。
+
+        1. 全局注册
+        2. 局部注册 （全局注册往往是不够理想的。比如，如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件意味着即便你已经不再使用一个组件了，它仍然会被包含在你最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。所以有了局部注册）
+     */
+    Vue.component('my-component', {
+        data:function(){
+            return {
+                    name:"我是子组件"
+            }
+        },
+        template: "<div>{{name}}</div>"
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1'
+        },
+        // 局部注册
+        // components: {
+        //     'component-a': ComponentA,
+        //     'component-b': ComponentB
+        // }
+    })
+</script>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 组件不会重新创建，只是到了缓存中 比如在某个组件中浏览到了某个位置 当切换回来的时候 还是那个位置  可以看官网的文章也挺好 https://cn.vuejs.org/v2/guide/components-dynamic-async.html -->
+        <keep-alive>
+            <component v-bind:is="is"></component>
+        </keep-alive>
+    </div>
+</body>
+<script>
+    Vue.component('a1', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        created:function(){
+            console.log('1');
+            
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+    Vue.component('b1', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        created:function(){
+            console.log('11');
+            
+        },
+        template: '<button v-on:click="count++">你点击我 {{ count }} times.</button>'
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: 'hello world1',
+            is: "a1"
+        },
+        
+    })
+</script>
+
+</html>

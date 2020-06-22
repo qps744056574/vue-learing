@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    #demo {
+        height: 300px;
+        width: 300px;
+        margin: 50px;
+        border: 1px solid red;
+    }
+
+    button {
+        position: absolute;
+    }
+
+    .fade-enter {
+        transform: translateX(30px);
+        position: absolute;
+    }
+
+    .fade-leave-to {
+        transform: translateX(-30px);
+    }
+
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all 0.2s ease-in;
+
+    }
+</style>
+
+<body>
+    <div id="demo">
+        <div v-on:click="goclick" style="display: block;">
+            Toggle
+        </div>
+        <transition name="fade" mode="in-out">
+            <button v-if="show" ref="el" key="on">on</button>
+            <button v-if="!show" ref="el" key="off">off</button>
+        </transition>
+        <!-- <transition name="fade" mode="out-in">
+            <button v-if="show" ref="el" key="on">on</button>
+            <button v-if="!show" ref="el" key="off">off</button>
+        </transition> -->
+    </div>
+</body>
+<script>
+    /* 
+
+        这是多个元素的过渡 用key 多个组建的过渡用 component 
+
+
+       in-out：新元素先进行过渡，完成之后当前元素过渡离开。 就是先进来在出去
+
+       out-in：当前元素先进行过渡，完成之后新元素过渡进入。 就是先出去在进来
+     */
+    new Vue({
+        el: '#demo',
+        data: {
+            show: true
+        },
+        methods: {
+            goclick() {
+                this.show = !this.show;
+
+
+            }
+        }
+    })
+</script>
+
+</html>

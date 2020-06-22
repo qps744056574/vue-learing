@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{label}}
+        <base-input v-model="label" v-on:focus="onFocus"><base-input>
+    </div>
+</body>
+<script>
+    /* 
+        this.$listeners, 包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 v-on=”$listeners” 传入内部组件——在创建更高层次的组件时非常有用。
+    
+     */
+    Vue.component('base-input', {
+        model: {
+            prop: 'value',
+            event: 'input'
+        },
+        props: {
+            value: String
+        },
+        computed: {
+            inputListeners: function () {
+                var vm = this
+                // `Object.assign` 将所有的对象合并为一个新对象
+                return Object.assign({},
+                    // 我们从父级添加所有的监听器
+                    this.$listeners,
+                    // 然后我们添加自定义监听器，
+                    // 或覆写一些监听器的行为
+                    {
+                        // 这里确保组件配合 `v-model` 的工作
+                        input: function (event) {
+                            vm.$emit('input', event.target.value)
+                        }
+                    }
+                )
+            }
+        },
+        methods: {
+
+        },
+        template: `<label>
+                <input
+                type="type"
+                    v-bind="$attrs"
+                    v-bind:value="value"
+                    v-on="inputListeners"
+                >
+        </label>`
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            label: "qps"
+        },
+        methods: {
+            onFocus() {
+                console.log('1');
+            }
+        }
+    })
+</script>
+
+</html>

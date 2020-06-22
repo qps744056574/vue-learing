@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <aa>{{message}}</aa>
+
+
+        <!--后背内容， 如果没有插槽的内容，默认就是是 slot 之间的内容  -->
+        <aa></aa>
+    </div>
+</body>
+<script>
+    /* 
+    插槽的作用域
+        父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的
+     */
+    Vue.component('aa', {
+        data:function(){
+            return {
+                message1:'我是子组件的内容'                
+            }  
+        },
+        template: ` <div><a href="">我是a标签</a> <slot>我是默认内容</slot>           </div>
+`
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: '我是父组件的内容'
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <aa :message="message">我是插槽</aa>
+  </div>
+</body>
+
+<script>
+  /* 
+    https://juejin.im/post/5c65511ce51d457fd23cf56b  掘金上的这篇文章讲的特别好 
+   */
+  Vue.component("aa", {
+    data: function () {
+      return { name: 'qps' }
+    },
+    props: ['message'],
+    render: function (createElement) {
+      console.log('scopedSlots', this.scopedSlots);
+
+      return createElement('div',
+        [
+          createElement('p', {
+            // 在数据对象中传递 `scopedSlots`
+            // 格式为 { name: props => VNode | Array<VNode> }
+            /* 
+              scopedSlots 可以看到在{} 对象里面，说明是数据参数，来形容本元素的 下面的写法翻译过来就是
+  
+              <template #default="props">
+                <p style="color:red">
+                  {{ props.text }}
+                </p>
+              <template>
+             
+             */
+            scopedSlots: {
+              default: function (props) {
+                return createElement('span', props.text)
+              }
+            }
+          })
+        ]
+
+      )
+    }
+  })
+
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: 'hello world1'
+    }
+  })
+</script>
+
+</html>
