@@ -33,7 +33,13 @@
             </template> -->
 
       <!-- 解构插槽 Prop -->
-      <template v-slot="{ user }">
+      <!-- <template v-slot="{ user }">
+        {{ user.firstName }}
+      </template> -->
+      <!-- <template #default="{ user }">
+        {{ user.firstName }}
+      </template> -->
+      <template slot="default"  slot-scope="{ user }">
         {{ user.firstName }}
       </template>
 
@@ -48,9 +54,9 @@
             </current-user> -->
 
 
-      <template v-slot:aa="slotProps">
-                {{ slotProps.user.firstName }}
-            </template>
+      <!-- <template v-slot:aa="slotProps">
+        {{ slotProps.user.firstName }}
+      </template> -->
 
     </current-user>
   </div>
@@ -77,12 +83,13 @@
             }
           }
         },
-        // render() {
+        render() {
           // 或者不用template 的写法，用这个，返回的是一个虚拟节点
-          // return this.$scopedSlots.default({ 'user': this.user })
-        // },
+          console.log(this.$scopedSlots.default({ 'user': this.user, name: "aa" }));
+          return this.$scopedSlots.default({ 'user': this.user })
+        },
         mounted: function () {
-          console.log('this.$scopedSlots', this.$scopedSlots);   //可以看到插槽在哪 这个属性在哪有值 父组件现在就是空的 
+          // console.log('this.$scopedSlots', this.$scopedSlots);   //可以看到插槽在哪 这个属性在哪有值 父组件现在就是空的 
           // 在render 函数里面可以发挥大作用，这里可以直接写slot 但是在render 不能写 所以在render函数中通过这种方式来写slot
         },
         /* 
