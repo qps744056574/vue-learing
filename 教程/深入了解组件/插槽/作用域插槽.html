@@ -2,97 +2,102 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <!-- 
+  <div id="app">
+    <!-- 
             如果在插槽中想访问子组件的数据，以下的方法是不行的  所以说作用域插槽的作用就是访问子组件的数据
          -->
 
-        <!-- <current-user>
+    <!-- <current-user>
             {{ user.firstName }}
         </current-user> -->
 
-        <!-- 必须得这样  slotProps 这个名字可以是任意名字   其实可以理解为 slot 这组件是封装组件 我们写的东西是封装组件的内容   -->
-        <!-- 这个是slot 是插槽的名字，如果是默认插槽可以去掉 -->
-        <current-user>
-            <!-- <template v-slot:default="slotProps">
+    <!-- 必须得这样  slotProps 这个名字可以是任意名字   其实可以理解为 slot 这组件是封装组件 我们写的东西是封装组件的内容   -->
+    <!-- 这个是slot 是插槽的名字，如果是默认插槽可以去掉 -->
+    <current-user>
+      <!-- <template v-slot:default="slotProps">
                 {{ slotProps.user.firstName }}
             </template> -->
 
 
-            <!-- <template v-slot="slotProps">
+      <!-- <template v-slot="slotProps">
                 {{ slotProps.user.firstName }}
             </template> -->
 
-            <!-- 解构插槽 Prop -->
-            <template v-slot="{ user }">
-                {{ user.firstName }}
-            </template>
+      <!-- 解构插槽 Prop -->
+      <template v-slot="{ user }">
+        {{ user.firstName }}
+      </template>
 
-            <!-- 它同样开启了 prop 重命名等其它可能，例如将 user 重命名为 person： -->
-            <!-- <template v-slot="{ user: person }">
+      <!-- 它同样开启了 prop 重命名等其它可能，例如将 user 重命名为 person： -->
+      <!-- <template v-slot="{ user: person }">
                 {{ person.firstName }}
             </template> -->
 
-            <!-- 你甚至可以定义后备内容，用于插槽 prop 是 undefined 的情形： -->
-            <!-- <current-user v-slot="{ user = { firstName: 'Guest' } }">
+      <!-- 你甚至可以定义后备内容，用于插槽 prop 是 undefined 的情形： -->
+      <!-- <current-user v-slot="{ user = { firstName: 'Guest' } }">
                 {{ user.firstName }}
             </current-user> -->
 
 
-            <!-- <template v-slot:aa="slotProps">
+      <template v-slot:aa="slotProps">
                 {{ slotProps.user.firstName }}
-            </template> -->
+            </template>
 
-        </current-user>
-    </div>
+    </current-user>
+  </div>
 </body>
 <script>
-    /* 
-       注意 v-slot 只能添加在 <template> 上 (只有一种例外情况)，这一点和已经废弃的 slot 特性不同。
-     */
-    var vm = new Vue({
-        el: "#app",
-        data: {
+  /* 
+     注意 v-slot 只能添加在 <template> 上 (只有一种例外情况)，这一点和已经废弃的 slot 特性不同。
+   */
+  var vm = new Vue({
+    el: "#app",
+    data: {
 
+    },
+    mounted: function () {
+      // console.log(' this', this.$scopedSlots);
+    },
+    components: {
+      "current-user": {
+        data: function () {
+          return {
+            user: {
+              firstName: "科比",
+              lastName: "布莱恩特",
+            }
+          }
         },
+        // render() {
+          // 或者不用template 的写法，用这个，返回的是一个虚拟节点
+          // return this.$scopedSlots.default({ 'user': this.user })
+        // },
         mounted: function () {
-            console.log(' this', this.$scopedSlots);
+          console.log('this.$scopedSlots', this.$scopedSlots);   //可以看到插槽在哪 这个属性在哪有值 父组件现在就是空的 
+          // 在render 函数里面可以发挥大作用，这里可以直接写slot 但是在render 不能写 所以在render函数中通过这种方式来写slot
         },
-        components: {
-            "current-user": {
-                data: function () {
-                    return {
-                        user: {
-                            firstName: "科比",
-                            lastName: "布莱恩特",
-                        }
-                    }
-                },
-                mounted: function () {
-                    console.log(' this', this.$scopedSlots);   //可以看到插槽在哪 这个属性在哪有值 父组件现在就是空的 在render 函数里面可以发挥大作用，这里可以直接写slot 但是在render 不能写 所以在render函数中通过这种方式来写slot
-                },
-                /* 
-                    可以理解为父组件（封装组件） v-bind:user="user"然后把属性 传给他的内容
-                
-                 */
-                template: `
+        /* 
+            可以理解为父组件（封装组件） v-bind:user="user"然后把属性 传给他的内容
+        
+         */
+        template: `
                 <span>
                     <slot v-bind:user="user">{{ user.lastName }}</slot>
                     <slot v-bind:user="user" name="aa">{{ user.lastName }}</slot>
                 </span>                                
                 `
-            }
-        }
-    })
+      }
+    }
+  })
 </script>
 
 </html>

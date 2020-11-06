@@ -2,76 +2,76 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <p @click="goClick" v-changecolor> {{ message }}</p>
-    </div>
+  <div id="app">
+    <p @click="goClick" v-changecolor> {{ message }}</p>
+  </div>
 </body>
 <script>
-    /* 
-        插件通常用来为 Vue 添加全局功能
-        Vue.js 的插件应该暴露一个 install 方法。这个方法的第一个参数是 Vue 构造器，第二个参数是一个可选的选项对象：
-     */
+  /* 
+      插件通常用来为 Vue 添加全局功能
+      Vue.js 的插件应该暴露一个 install 方法。这个方法的第一个参数是 Vue 构造器，第二个参数是一个可选的选项对象：
+   */
 
-    var MyPlugin = {
-        install: function (Vue, options) {
-             // 1. 添加全局方法或属性
-                Vue.myGlobalMethod = function () {
-                    console.log('我是插件全局方法');
-                },
-             // 2. 添加全局资源 可以添加【自定义指令】、【过滤器】、【过渡等】，这里以【过滤器】为例
-            Vue.directive('changecolor', {
-                bind (el, binding, vnode, oldVnode) {
-                    el.style.color="red"
-                }
-            }),
-            // 3. 注入组件选项
-            Vue.mixin({
-                props:[name],
-                data:function(){
-                    return options
-                },
-                methods:{
-                    aa:function(){
-                        console.log('我是minin的方法');
-                        
-                    }
-                },
-                created: function () {
-                    console.log('this.name',this.name);
-                    console.log('wo shi created');
-                }
-            }),
-            // 4. 添加实例方法
-            Vue.prototype.$myGlobalMethod = function () {
-                console.log('我是插件实例方法');
-                
+  var MyPlugin = {
+    install: function (Vue, options) {
+      // 1. 添加全局方法或属性
+      Vue.myGlobalMethod = function () {
+        console.log('我是插件全局方法');
+      },
+        // 2. 添加全局资源 可以添加【自定义指令】、【过滤器】、【过渡等】，这里以【过滤器】为例
+        Vue.directive('changecolor', {
+          bind(el, binding, vnode, oldVnode) {
+            el.style.color = "red"
+          }
+        }),
+        // 3. 注入组件选项
+        Vue.mixin({
+          props: [name],
+          data: function () {
+            return options
+          },
+          methods: {
+            aa: function () {
+              console.log('我是minin的方法');
+
             }
+          },
+          created: function () {
+            console.log('this.name', this.name);
+            console.log('wo shi created');
+          }
+        }),
+        // 4. 添加实例方法
+        Vue.prototype.$myGlobalMethod = function () {
+          console.log('我是插件实例方法');
+
         }
     }
-    Vue.use(MyPlugin,{name:'qps'})
+  }
+  Vue.use(MyPlugin, { name: 'qps' })
 
-    var vm = new Vue({
-        el: "#app",
-        data: {
-            message: 'hello world1'
-        },
-        methods: {
-            goClick() {
-                Vue.myGlobalMethod()
-                this.$myGlobalMethod();
-                this.aa()
-            }
-        }
-    })
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: 'hello world1'
+    },
+    methods: {
+      goClick() {
+        Vue.myGlobalMethod()
+        this.$myGlobalMethod();
+        this.aa()
+      }
+    }
+  })
 </script>
 
 </html>

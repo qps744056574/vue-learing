@@ -13,13 +13,13 @@
 >  provide 选项允许我们指定我们想要提供给后代组件的数据/方法。后代用inject 来注入。依赖注入.html
 ## mixin是什么？
 >  定义一个混入对象(这个对象是vue实例的选项对象)  在任何地方只要混入就可以用，比依赖注入还强大，依赖注入只能注入数据/方法，混入可以是任何选项对象  https://cn.vuejs.org/v2/guide/mixins.html
-## 什么是渲染函数，什么是jsx，有啥区别？
->  渲染函数就是render函数，有三个参数 。render函数用来代替部分html元素，由于render函数写的很痛苦，很麻烦，跟原生的模板html大相径庭，所有有了jsx，用于在 Vue 中使用 JSX 语法，它可以让我们回到更接近于模板的语法上。用jsx需要安装bable ，来解析这种语法。npm install @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props     https://github.com/vuejs/jsx
+
 ## v-leave 没有生效
 > 这个我也不知道，一般是v-leave-to和v-enter 配合使用的， 在dom视察中可以看出来 fade-leave 和 fade-enter 闪的很快 ，active 和 to 是共存的，先active 后to，所以可能存在样式覆盖的问题
 .v-enter, .v-leave-to 设置的 时候一般这两个是成对出现的
 ## is用在什么地方？
 > is可以用在动态组件或者是table中tr是组件可以有用  可以看我的示例 组件基础-动态组件
+
     `
     <table>
     <tr is="blog-post-row"></tr>
@@ -148,7 +148,9 @@
     <text-document v-bind:title.sync="doc.title"></text-document>
   `
 
+
  ——----------------------------- md笔记---------------------------------------
+
 # 基础
 
 # 深入了解组件
@@ -169,6 +171,7 @@
 ### 具名插槽？
     > <slot name="header"></slot>    <template v-slot:header></template>   
 ### 作用域插槽？
+
         插槽的编译作用域是在当前组件，如果我们想作用域是子组件怎们办呢，作用域插槽就诞生了。有时让插槽内容能够访问子组件中才有的数据是很有用的。方法是：
         `
         <slot v-bind:user="user">
@@ -190,9 +193,13 @@
 ### 具名插槽的缩写
     即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：
 ## 处理边界情况
+
     > 这里记录的都是和处理边界情况有关的功能，即一些需要对 Vue 的规则做一些小调整的特殊情况。
+
     ### 访问元素&组件
+
     > 访问根实例 $root  父组件的实例 $parent   访问子组件实例或子元素  ref
+
     ### 依赖注入   provide  和 inject
 ## 模板定义的tidaipn
     ### 内联模板
@@ -243,7 +250,8 @@
 >  jsx 使用教程 https://github.com/vuejs/jsx#installation
 > $scopedSlots 是作用域插槽，在正常的情况下可以通过  slot name="aa"  v-bind:属性=属性  但是在render函数中，不能这么写，所以用$scopedSlots.default等来写 可以看插槽.html
 > 下面是jsx写法的$scopedSlots 可以看出来了是个对象
-`
+
+```
     render() {
         const scopedSlots = {
             header: () => <header>header</header>,
@@ -252,9 +260,18 @@
 
         return <MyComponent scopedSlots={scopedSlots} />
     }
-`
+```
+## 什么是渲染函数，什么是jsx，有啥区别？
+>  渲染函数就是render函数，有三个参数 。render函数用来代替部分html元素，由于render函数写的很痛苦，很麻烦，跟原生的模板html大相径庭，所有有了jsx，用于在 Vue 中使用 JSX 语法，它可以让我们回到更接近于模板的语法上。用jsx需要安装bable ，来解析这种语法。npm install @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props     https://github.com/vuejs/jsx
+## jsx 的基本书写原则
+> jsX就是JavaScript和XML结合的一种格式。react发明了jsX，利用html语法来创建虚拟DOM。当遇到<，jsX就当html解析，遇到{就当JavaScript解析.
 ## 过滤器
 > 过滤器.html
+## Props 和 property 的区别？
+> Props 是一个组件的输入属性，property 是一个组件的实力属性，包括 props  data  等。
+
+
+
 
 
 

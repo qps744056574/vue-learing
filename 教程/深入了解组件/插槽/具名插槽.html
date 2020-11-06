@@ -2,49 +2,64 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <base-layout>
-            <!-- <template v-slot:header>
+  <div id="app">
+    <base-layout>
+      <!-- <template v-slot:header>
                 <h1>Here might be a page title</h1>
             </template>  -->
-            <!-- 缩写 -->
-            <template #header>
-                <h1>Here might be a page title</h1>
-            </template> 
+      <!-- 缩写 -->
+      <template #header>
+        <h1>Here might be a page title</h1>
+      </template>
 
 
-            <template v-slot:default>
-                <p>A paragraph for the main content.</p>
-                <p>And another one.</p>
-            </template>
+      <template v-slot:default>
+        <p>A paragraph for the main content.</p>
+        <p>And another one.</p>
+      </template>
 
-            <template v-slot:footer>
-                <p>Here's some contact info</p>
-            </template>
-        </base-layout>
-    </div>
+      <template v-slot:footer>
+        <p>Here's some contact info</p>
+      </template>
+    </base-layout>
+  </div>
 </body>
 <script>
-    /* 
-       注意 v-slot 只能添加在 <template> 上 (只有一种例外情况)，这一点和已经废弃的 slot 特性不同。
-     */
-    var vm = new Vue({
-        el: "#app",
-        data: {
-            message: '我是父组件的内容'
+  /* 
+     注意 v-slot 只能添加在 <template> 上 (只有一种例外情况)，这一点和已经废弃的 slot 特性不同。
+   */
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: '我是父组件的内容'
+    },
+    mounted() {
+      setTimeout(() => {
+
+        console.log('parent-this', this);
+      }, 1000)
+    },
+
+    components: {
+      "base-layout": {
+        mounted() {
+          setTimeout(() => {
+
+            console.log('child-this', this);
+            console.log('this.$slots.header',this.$slots.header);
+            console.log('this.$scopedSlots',this.$copedSlots); 
+          }, 1000)
         },
-        components: {
-            "base-layout": {
-                template: `
+        template: `
                 <div class="container">
                 <header>
                     <slot name="header"></slot>
@@ -58,9 +73,9 @@
                 </div>
                                 
                 `
-            }
-        }
-    })
+      }
+    }
+  })
 </script>
 
 </html>
